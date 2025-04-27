@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US States API Documentation</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        h1, h2 { color: #333; }
+        .container { max-width: 800px; margin: auto; }
+        pre, code { background-color: #f4f4f4; padding: 10px; display: block; border-radius: 5px; }
+        nav { background: #333; padding: 10px; margin-bottom: 20px; }
+        nav a { color: white; margin-right: 15px; text-decoration: none; font-weight: bold; }
+        .section { margin-bottom: 40px; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <a href="#intro">Introduction</a>
+            <a href="#base-url">Base URL</a>
+            <a href="#endpoints">Endpoints</a>
+            <a href="#errors">Error Handling</a>
+        </nav>
+
+        <h1 id="intro">🌎 US States API Documentation</h1>
+        <p>Welcome to the API documentation for retrieving state-related information, including fun facts, capitals, nicknames, populations, and admission dates.</p>
+
+        <div class="section">
+            <h2 id="base-url">📍 Base URL</h2>
+            <pre>http://localhost:3500</pre>
+        </div>
+
+        <div class="section">
+            <h2 id="endpoints">📜 Endpoints & Methods</h2>
+
+            <h3>1️⃣ Get All States</h3>
+            <p><strong>GET</strong> <code>/states</code> - Retrieves data for all 50 US states.</p>
+            <p>Example Request:</p>
+            <pre><code>/states?contig=true</code></pre>
+            - Retrieves data for the contiguous (i.e., lower 48 states) exluding Alaska and Hawaii.
+            <p>Example Response:</p>
+            <pre><code>
+            [
+                {
+                    "state": "Alabama",
+                    "slug": "alabama",
+                    "code": "AL",
+                    "nickname": "Yellowhammer State",
+                    "website": "http://www.alabama.gov",
+                    "admission_date": "1819-12-14",
+                    "admission_number": 22,
+                    "capital_city": "Montgomery",
+                    "capital_url": "http://www.montgomeryal.gov",
+                    "population": 4833722,
+                    "population_rank": 23,
+                    "constitution_url": "http://alisondb.legislature.state.al.us/alison/default.aspx",
+                    "state_flag_url": "https://cdn.civil.services/us-states/flags/alabama-large.png",
+                    "state_seal_url": "https://cdn.civil.services/us-states/seals/alabama-large.png",
+                    "map_image_url": "https://cdn.civil.services/us-states/maps/alabama-large.png",
+                    "landscape_background_url": 
+                    "https://cdn.civil.services/us-states/backgrounds/1280x720/landscape/alabama.jpg",
+                    "skyline_background_url": 
+                    "https://cdn.civil.services/us-states/backgrounds/1280x720/skyline/alabama.jpg",
+                    "twitter_url": "https://twitter.com/alabamagov",
+                    "facebook_url": "https://www.facebook.com/alabamagov",
+                    "funfacts": []
+                },
+                {
+                    "state": "Arizona",
+                    "slug": "arizona",
+                    "code": "AZ",
+                    "nickname": "The Grand Canyon State",
+                    "website": "https://az.gov",
+                    "admission_date": "1912-02-14",
+                    "admission_number": 48,
+                    "capital_city": "Phoenix",
+                    "capital_url": "https://www.phoenix.gov",
+                    "population": 6626624,
+                    "population_rank": 15,
+                    "constitution_url": "http://www.azleg.gov/Constitution.asp",
+                    "state_flag_url": "https://cdn.civil.services/us-states/flags/arizona-large.png",
+                    "state_seal_url": "https://cdn.civil.services/us-states/seals/arizona-large.png",
+                    "map_image_url": "https://cdn.civil.services/us-states/maps/arizona-large.png",
+                    "landscape_background_url": 
+                    "https://cdn.civil.services/us-states/backgrounds/1280x720/landscape/arizona.jpg",
+                    "skyline_background_url": 
+                    "https://cdn.civil.services/us-states/backgrounds/1280x720/skyline/arizona.jpg",
+                    "twitter_url": null,
+                    "facebook_url": null,
+                    "funfacts": []
+                },
+                {
+                    ...other states
+                }
+            ]
+            </code></pre>
+
+            <p>Example Request:</p>
+            <pre><code>/states?contig=false</code></pre>
+            - Retrieves data for non-contiguous states (i.e., returns data for only Alaska and Hawaii).
+            <p>Example Response:</p>
+            <pre><code>
+            [
+                {
+                    "state": "Alaska",
+                    "slug": "alaska",
+                    "code": "AK",
+                    "nickname": "The Last Frontier",
+                    "website": "http://alaska.gov",
+                    "admission_date": "1959-01-03",
+                    "admission_number": 49,
+                    "capital_city": "Juneau",
+                    "capital_url": "http://www.juneau.org",
+                    "population": 735132,
+                    "population_rank": 47,
+                    "constitution_url": 
+                    "http://www.legis.state.ak.us/basis/folioproxy.asp?url=http://wwwjnu01.legis.state.ak.us",
+                    "state_flag_url": "https://cdn.civil.services/us-states/flags/alaska-large.png",
+                    "state_seal_url": "https://cdn.civil.services/us-states/seals/alaska-large.png",
+                    "map_image_url": "https://cdn.civil.services/us-states/maps/alaska-large.png",
+                    "landscape_background_url": 
+                    "https://cdn.civil.services/us-states/backgrounds/1280x720/landscape/alaska.jpg",
+                    "skyline_background_url": 
+                    "https://cdn.civil.services/us-states/backgrounds/1280x720/skyline/alaska.jpg",
+                    "twitter_url": "https://twitter.com/alaska",
+                    "facebook_url": "https://www.facebook.com/AlaskaLocalGovernments",
+                    "funfacts": []
+                },
+                {
+                    "state": "Hawaii",
+                    "slug": "hawaii",
+                    "code": "HI",
+                    "nickname": "Aloha State",
+                    "website": "https://www.ehawaii.gov",
+                    "admission_date": "1959-08-21",
+                    "admission_number": 50,
+                    "capital_city": "Honolulu",
+                    "capital_url": "http://www.co.honolulu.hi.us",
+                    "population": 1404054,
+                    "population_rank": 40,
+                    "constitution_url": "http://lrbhawaii.org/con",
+                    "state_flag_url": "https://cdn.civil.services/us-states/flags/hawaii-large.png",
+                    "state_seal_url": "https://cdn.civil.services/us-states/seals/hawaii-large.png",
+                    "map_image_url": "https://cdn.civil.services/us-states/maps/hawaii-large.png",
+                    "landscape_background_url": 
+                    "https://cdn.civil.services/us-states/backgrounds/1280x720/landscape/hawaii.jpg",
+                    "skyline_background_url": 
+                    "https://cdn.civil.services/us-states/backgrounds/1280x720/skyline/hawaii.jpg",
+                    "twitter_url": "https://twitter.com/ehawaiigov",
+                    "facebook_url": "https://www.facebook.com/ehawaii.gov",
+                    "funfacts": []
+                }
+            ]
+            </code></pre>
+
+            <h3>2️⃣ Get Single State Details</h3>
+            <p> <code> /states/{stateCode}</code> - Retrieves details for a specific state.</p>
+            <p>Example Request:</p>
+            <pre><code> /states/KS</code></pre>
+            <p>Example Response:</p>
+            <pre><code>
+        {
+            "state": "Kansas",
+            "slug": "kansas",
+            "code": "KS",
+            "nickname": "Sunflower State",
+            "website": "https://www.kansas.gov",
+            "admission_date": "1861-01-29",
+            "admission_number": 34,
+            "capital_city": "Topeka",
+            "capital_url": "http://www.topeka.org",
+            "population": 2893957,
+            "population_rank": 34,
+            "constitution_url": "https://kslib.info/405/Kansas-Constitution",
+            "state_flag_url": "https://cdn.civil.services/us-states/flags/kansas-large.png",
+            "state_seal_url": "https://cdn.civil.services/us-states/seals/kansas-large.png",
+            "map_image_url": "https://cdn.civil.services/us-states/maps/kansas-large.png",
+            "landscape_background_url": 
+            "https://cdn.civil.services/us-states/backgrounds/1280x720/landscape/kansas.jpg",
+            "skyline_background_url": 
+            "https://cdn.civil.services/us-states/backgrounds/1280x720/skyline/kansas.jpg",
+            "twitter_url": "http://www.twitter.com/ksgovernment",
+            "facebook_url": 
+            "http://www.facebook.com/pages/Topeka-KS/Kansasgov-Kansas-Government-Online/52068474220",
+            "funfacts": [
+                "Dwight D. Eisenhower from Abilene was the 34th President of the United States.",
+                "Silent comedian Buster Keaton, of early film success, was from Piqua, Kansas.",
+                "Wyatt Earp, James Butler “Wild Bill” Hickok and William B. “Bat” Masterson were 
+                three of the legendary lawmen who kept the peace in rowdy frontier towns like 
+                Abilene, Dodge City, Ellsworth, Hays, and Wichita."
+            ]
+        }
+            </code></pre>
+
+            <h3>3️⃣ Manage Fun Facts</h3>
+            <p><strong>GET</strong> <code>/states/{stateCode}/funfact</code> - Retrieves a random fun fact.</p>
+            <p><strong>POST</strong> <code>/states/{stateCode}/funfact</code> - Adds a fun fact.</p>
+            <p><strong>PATCH</strong> <code>/states/{stateCode}/funfact</code> - Updates a fun fact at a given index.</p>
+            <p><strong>DELETE</strong> <code>/states/{stateCode}/funfact</code> - Removes a fun fact at a given index.</p>
+        </div>
+
+        <div class="section">
+            <h2 id="errors">🛠 Error Handling</h2>
+            <p>Errors return structured JSON responses:</p>
+            <pre><code>{"error": "State code 'XYZ' is invalid."}</code></pre>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -32,7 +32,6 @@ const getAllStates = async (req, res) => {
     }
 };
 
-
 const getState = async (req, res) => {
     try {
         const state = data.states.find(st => st.code === req.code); // Use verified stateCode
@@ -41,11 +40,12 @@ const getState = async (req, res) => {
         // Fetch fun facts from MongoDB
         const mongoState = await State.findOne({ stateCode: req.code });
 
-        // Merge JSON data with fun facts
-        const responseData = {
-            ...state,
-            funfacts: mongoState?.funfacts || []
-        };
+        // Merge data and conditionally include funfacts
+        let responseData = { ...state }; // Default: JSON data only                                
+
+        if (mongoState && Array.isArray(mongoState.funfacts) && mongoState.funfacts.length > 0) {  
+            responseData.funfacts = mongoState.funfacts;  // Add funfacts if available             
+        }
 
         res.json(responseData);
     } catch (error) {

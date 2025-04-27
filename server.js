@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const connectDB  = require('./config/dbConn');
+const connectDB    = require('./config/dbConn');
 const express      = require('express');
 const app          = express();
 const path         = require('path');
@@ -36,7 +36,6 @@ app.post('/test', (req, res) => {
     console.log("Test endpoint hit. Body received:", req.body);
     res.json(req.body);
 });
-
 
 app.use('/', require('./routes/root'));
 

@@ -11,7 +11,8 @@ const getStateFunFact = async (req, res) => {
         const mongoState = await State.findOne({ stateCode: req.code });
 
         if (!mongoState || !mongoState.funfacts || mongoState.funfacts.length === 0) {
-            return res.status(404).json({ message: `No fun facts found for ${req.code}` });
+            //return res.status(404).json({ message: `No fun facts found for ${req.code}` });               
+            return res.status(404).json({ message: `No Fun Facts found for ${getStateName(req.code)}` }); 
         }
 
         const randomFact = mongoState.funfacts[Math.floor(Math.random() * mongoState.funfacts.length)];
@@ -26,8 +27,22 @@ const addFunFact = async (req, res) => {
     try {
         console.log(`Incoming request body:`, JSON.stringify(req.body, null, 2));
 
-        if (!req.body.funfacts || !Array.isArray(req.body.funfacts)) {
+        // ✅ Check if request body contains the correct key
+        if (!req.body.hasOwnProperty('funfacts')) {
             return res.status(400).json({ message: "State fun facts value required" });
+        }
+
+        // Step 1: Check if funfacts is an array
+        if (!Array.isArray(req.body.funfacts)) {                                                         
+            return res.status(400).json({ message: "State fun facts value must be an array" });          
+        }
+
+        // Step 2: Filter out blank entries
+        const filteredFunFacts = req.body.funfacts.filter(fact => fact.trim() !== "");                   
+
+        // Step 3: Ensure there are valid fun facts after filtering
+        if (filteredFunFacts.length === 0) {                                                             
+            return res.status(400).json({ message: "State fun facts value required" });                  
         }
 
         let state = await State.findOne({ stateCode: req.code });
@@ -43,8 +58,7 @@ const addFunFact = async (req, res) => {
         }
 
         await state.save();
-        //res.json({ message: "Fun fact added successfully!", state });
-        //res.status(201).json({ state });
+        
         // ✅ Dynamically set status based on whether state was newly created or just updated
         res.status(isNewState ? 201 : 200).json({
             _id: state._id,
@@ -132,12 +146,6 @@ const deleteFunFact = async (req, res) => {
             return res.status(400).json({ message: "Index must be an integer." });
         }
         
-        /*
-        if (!req.body.index || typeof req.body.index !== 'number') {
-            return res.status(400).json({ message: "Invalid request body. Must provide 'index' as a number." });
-        }
-        */
-
         const state = await State.findOne({ stateCode: req.code });
         if (!state || !state.funfacts || state.funfacts.length === 0) {
             return res.status(404).json({ message: `No Fun Facts found for ${getStateName(req.code)}`});
@@ -153,7 +161,6 @@ const deleteFunFact = async (req, res) => {
         state.funfacts.splice(adjustedIndex, 1); // ✅ Removes fun fact at the correct index
         await state.save();
 
-        //res.json({ message: "Fun fact deleted successfully!", state });
         res.status(200).json({
             _id: state._id,
             stateCode: state.stateCode,

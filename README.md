@@ -46,18 +46,22 @@ http://localhost:3500
 **Endpoints & Methods**
 
 **1️) Get All Stat**
+
 GET /states
 Returns data for all US states.
 
 **Query Params:**
+
 contig=true → Only contiguous states (i.e., lower 48)
 contig=false → Only non-contiguous states
 
 **2️) Get a Single State**
+
 GET /states/{stateCode}
 
 Example:
 GET /states/KS
+
 Response:
 {
     "state": "Kansas",
@@ -68,12 +72,14 @@ Response:
 }
 
 **3️) Fun Facts Management**
+
 GET /states/{stateCode}/funfact → Returns a random fun fact.
 POST /states/{stateCode}/funfact → Adds new fun facts.
 PATCH /states/{stateCode}/funfact → Updates an existing fun fact.
 DELETE /states/{stateCode}/funfact → Removes a fun fact.
 
 🔧 Error Handling
+
 Responses are structured as:
 
 { "error": "State code 'ZZ' is invalid." }

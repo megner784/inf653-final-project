@@ -89,7 +89,8 @@ Responses are structured as:
 { "error": "State code 'ZZ' is invalid." }
 
 📝 License
-This project is licensed under MIT License.
+
+None.
 
 🤝 Contributing
 If you’d like to contribute, submit a pull request or open an issue.

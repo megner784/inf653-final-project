@@ -60,31 +60,26 @@ const addFunFact = async (req, res) => {
     }
 };
 
+/****
 const updateFunFact = async (req, res) => {
     try {
         console.log(`Incoming request body:`, JSON.stringify(req.body, null, 2));
 
         if (!req.body.index) {
-            return res.status(400).json({ message: "Invalid request body. Must provide 'index'." });
+            return res.status(400).json({ message: "State fun fact index value required" });
         }
 
         if (!Number.isInteger(req.body.index)) {  // ✅ Ensure index is a whole number
             return res.status(400).json({ message: "Index must be an integer." });
         }
 
-        /*
-        if (!req.body.index || typeof req.body.index !== 'number') {
-            return res.status(400).json({ message: "Invalid request body. Must provide 'index' as a number." });
-        }
-        */
-
         if (!req.body.funfact) {
-            return res.status(400).json({ message: "Invalid request body. Must provide 'funfact' as a string." });
+            return res.status(400).json({ message: "State fun fact value required" });
         }
 
         const state = await State.findOne({ stateCode: req.code });
         if (!state || !state.funfacts || state.funfacts.length === 0) {
-            return res.status(404).json({ message: `No Fun Fact found for ${req.code}.` });
+            return res.status(404).json({  message: `No Fun Facts found for ${getStateName(req.code)}`});
         }
 
         // Adjust the one-based index to zero-based for array access
@@ -97,12 +92,80 @@ const updateFunFact = async (req, res) => {
         state.funfacts[adjustedIndex] = req.body.funfact; // ✅ Updating based on adjusted zero-based index
         await state.save();
 
-        res.json({ message: "Fun fact updated successfully!", state });
+        //res.json({ message: "Fun fact updated successfully!", state });
+        res.status(200).json({
+            _id: state._id,
+            stateCode: state.stateCode,
+            funfacts: state.funfacts,
+            __v: state.__v
+        });
+
     } catch (error) {
         console.error("Error in updateFunFact:", error);
         res.status(500).json({ message: "Server error", error });
     }
 };
+****/
+
+const updateFunFact = async (req, res) => {
+    try {
+        console.log(`Incoming request body:`, JSON.stringify(req.body, null, 2));
+
+        // ✅ 1. Check for missing index
+        if (req.body.index === undefined || req.body.index === null) {
+            return res.status(400).json({ message: "State fun fact index value required" });
+        }
+
+        // ✅ 2. Ensure index is an integer
+        if (!Number.isInteger(req.body.index)) {
+            return res.status(400).json({ message: "Index must be an integer." });
+        }
+
+        // ✅ 3a. Special case for index === 0 (explicitly required)
+        if (req.body.index === 0) {
+            return res.status(400).json({ message: "State fun fact index value required" });
+        // ✅ 3b. Special case for index < 0 (explicitly required)
+        } else if (req.body.index < 0) {
+            return res.status(404).json({ message: `No Fun Fact found at that index for ${getStateName(req.code)}` });
+        }
+
+        // ✅ 4. Check for missing funfact
+        if (!req.body.funfact) {
+            return res.status(400).json({ message: "State fun fact value required" });
+        }
+
+        // ✅ 5. Retrieve state and validate existence
+        const state = await State.findOne({ stateCode: req.code });
+        if (!state || !state.funfacts || state.funfacts.length === 0) {
+            return res.status(404).json({ message: `No Fun Facts found for ${getStateName(req.code)}` });
+        }
+
+        // ✅ 6. Adjust index (convert to zero-based index)
+        const adjustedIndex = req.body.index - 1;
+
+        // ✅ 7. Validate index range
+        if (adjustedIndex < 0 || adjustedIndex >= state.funfacts.length) {
+            return res.status(404).json({ message: `No Fun Fact found at that index for ${getStateName(req.code)}` });
+        }
+
+        // ✅ 8. Update funfact
+        state.funfacts[adjustedIndex] = req.body.funfact;
+        await state.save();
+
+        // ✅ 9. Respond with updated state
+        res.status(200).json({
+            _id: state._id,
+            stateCode: state.stateCode,
+            funfacts: state.funfacts,
+            __v: state.__v
+        });
+
+    } catch (error) {
+        console.error("Error in updateFunFact:", error);
+        res.status(500).json({ message: "Server error", error });
+    }
+};
+
 
 const deleteFunFact = async (req, res) => {
     try {

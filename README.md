@@ -51,6 +51,7 @@ Returns data for all US states.
 **Query Params:**
 
 contig=true → Only contiguous states (i.e., lower 48)
+
 contig=false → Only non-contiguous states
 
 **2️) Get a Single State**
@@ -58,6 +59,7 @@ GET /states/{stateCode}
 
 Example:
 GET /states/KS
+
 Response:
 {
     "state": "Kansas",

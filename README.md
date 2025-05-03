@@ -67,8 +67,11 @@ Response:
 
 **3️) Fun Facts Management**
 GET /states/{stateCode}/funfact → Returns a random fun fact.
+
 POST /states/{stateCode}/funfact → Adds new fun facts.
+
 PATCH /states/{stateCode}/funfact → Updates an existing fun fact.
+
 DELETE /states/{stateCode}/funfact → Removes a fun fact.
 
 🔧 Error Handling

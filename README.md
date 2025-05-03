@@ -20,8 +20,7 @@ add, update, and delete **fun facts** for each state.
 ### **Installation**
 Clone the repository:
 ```sh
-git clone https://github.com/your-repo/us-states-api.git
-cd us-states-api
+git clone https://github.com/megner784/inf653-final-project
 ```
 #### Install dependences:
 npm install
@@ -36,13 +35,13 @@ This connects your app to MongoDB Atlas.
 **Start Server**
 npm start
 
-Your API will run on http://localhost:3500.
+Your API will run on https://inf653-final-project-crud-api.glitch.me/.
 
 📌 API Reference
 Base URL
-http://localhost:3500
+https://inf653-final-project-crud-api.glitch.me/
 
-**Endpoints & Methods**
+**Endpoints and Methods**
 
 **1️) Get All Stat**
 GET /states

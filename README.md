@@ -43,11 +43,13 @@ https://inf653-final-project-crud-api.glitch.me/
 
 **Endpoints and Methods**
 
-**1️) Get All Stat**
+**1️) Get All States**
+
 GET /states
 Returns data for all US states.
 
 **Query Params:**
+
 contig=true → Only contiguous states (i.e., lower 48)
 contig=false → Only non-contiguous states
 
